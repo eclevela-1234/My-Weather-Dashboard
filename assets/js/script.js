@@ -1,10 +1,12 @@
 // place api key here for development
-var apiKey = ""
-// get coordinates for city
+import { apiKey } from "./api.js"; 
+
+
 
 var getCoords = function(city) {
-
-    var apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q="+ city + "&limit=1&appid=" + apiKey
+    console.log(apiKey);
+    // get coordinates for city
+    var apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q="+ city + "&limit=1&appid=" + apiKey;
 
     fetch(apiUrl)
     .then(function(response){
@@ -18,12 +20,15 @@ var getCoords = function(city) {
             })
         }
     })
-}
+};
 
 // plug coords into one call api
 
 var getWeather = function(lat, lon) {
-    apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly&appid=" + apiKey;
+
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly&appid=" + apiKey;
+
+    console.log(apiUrl);
 
     fetch(apiUrl)
     .then(function(response) {
@@ -33,10 +38,10 @@ var getWeather = function(lat, lon) {
             })
         }
     })
-}
+};
 // display results in console
 
-
+getCoords("richmond");
 // traverse response to disired info and store in object array
 
 
