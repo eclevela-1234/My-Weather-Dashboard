@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Weather Dashboard</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+    <header class="container">
+        <h1 class="text-center text-light py-2 m-1 fw-bold">Weather Dashboard</h1>
+    </header>
+
+    <main class="container">
+        <div class="row">
+            <div class="col-12 col-md-3" id="search-pane">
+                <div class="form-group pb-3 mb-3 border-bottom border-dark">
+                    <label class="form-label fw-bold">Search for a City:</label>
+                    <input class="form-control mb-2" type="text" name="city" id="city" placeholder="Richmond, VA">
+                    <button class="btn btn-info form-control">Search</button>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-9">
+                <div class="col-12 border p-1 border-dark" id="weather-now">
+                    <h2>Richmond, (7/3/2022)</h2>
+                    <div id="now-data-group">
+                        <div class="list-item" id="temp">Temp</div>
+                        <div id="wind">Wind</div>
+                        <div id="humidity">Humidity</div>
+                        <div id="uv-index">UV-Index</div>
+                    </div>
+                </div>
+                <h3 class="col-12">5-Day Forecast</h3>
+                <div class="row justify-content-around">
+                    <div class="card bg-secondary" id="" style="width: 10rem;">
+                        <div class="card-header">Monday</div>
+                        <ul class="list-group list-group-flush">
+                            <img src="https://via.placeholder.com/100" alt="">
+                            <li class="list-group-item">Temp:</li>
+                            <li class="list-group-item">Wind:</li>
+                            <li class="list-group-item">Humidity:</li>
+                        </ul>
+                        
+                    </div>
+                    <div class="card bg-secondary" id="" style="width: 10rem;">
+                        <div class="card-header">Monday</div>
+                        <ul class="list-group list-group-flush">
+                            <img src="https://via.placeholder.com/50" alt="">
+                            <li class="list-group-item">Temp:</li>
+                            <li class="list-group-item">Wind:</li>
+                            <li class="list-group-item">Humidity:</li>
+                        </ul>
+                        
+                    </div>
+                    <div class="card bg-secondary" id="" style="width: 10rem;">
+                        <div class="card-header">Monday</div>
+                        <ul class="list-group list-group-flush">
+                            <img src="https://via.placeholder.com/50" alt="">
+                            <li class="list-group-item">Temp:</li>
+                            <li class="list-group-item">Wind:</li>
+                            <li class="list-group-item">Humidity:</li>
+                        </ul>
+                        
+                    </div>
+                    <div class="card bg-secondary" id="" style="width: 10rem;">
+                        <div class="card-header">Monday</div>
+                        <ul class="list-group list-group-flush">
+                            <img src="https://via.placeholder.com/50" alt="">
+                            <li class="list-group-item">Temp:</li>
+                            <li class="list-group-item">Wind:</li>
+                            <li class="list-group-item">Humidity:</li>
+                        </ul>
+                        
+                    </div>
+                    <div class="card bg-secondary" id="" style="width: 10rem;">
+                        <div class="card-header">Monday</div>
+                        <ul class="list-group list-group-flush">
+                            <img src="https://via.placeholder.com/50" alt="">
+                            <li class="list-group-item">Temp:</li>
+                            <li class="list-group-item">Wind:</li>
+                            <li class="list-group-item">Humidity:</li>
+                        </ul>
+                        
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script src="./assets/js/script.js"></script>
+</body>
+
+</html>
