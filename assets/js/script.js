@@ -5,6 +5,7 @@ var tempEl = document.querySelector("#temp");
 var windEl = document.querySelector("#wind");
 var humEl = document.querySelector("#humidity");
 var uvEl = document.querySelector("#uv-index");
+var weatherHeaderEl = document.querySelector("#weather-header");
 
 
 //to test functionality, please disable import and add an OpenWeather api key below
@@ -24,7 +25,8 @@ var getCoords = function (city) {
       response.json().then(function (data) {
         var lat = data[0].lat;
         var lon = data[0].lon;
-
+        var name = data[0].name
+        weatherHeaderEl.textContent = name
         getWeather(lat, lon);
       });
     }
@@ -69,13 +71,17 @@ var displayData = function(data){
     windEl.appendChild(curWind);
     humEl.appendChild(curHum);
     uvEl.appendChild(curUV);
-
-
     
+    var date = new Date((data.current.dt + data.timezone_offset) * 1000);
+    date = date.toLocaleDateString();
+    weatherHeaderEl.textContent += " (" + date +")"
+    console.log(date);
+    
+
 
 };
 
-getCoords("richmond");
+getCoords("sydney");
 // traverse response to disired info and store in object array
 
 // dynamically create elements and display on page
