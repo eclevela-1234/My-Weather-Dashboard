@@ -60,9 +60,9 @@ var displayData = function(data){
     var curHum = document.createElement("span");
     var curUV = document.createElement("span");
     //parse current data
-    curTemp.textContent = data.current.temp;
-    curWind.textContent = data.current.wind_speed;
-    curHum.textContent = data.current.humidity;
+    curTemp.textContent = data.current.temp + " °F";
+    curWind.textContent = data.current.wind_speed + " mph";
+    curHum.textContent = data.current.humidity + " %";
     curUV.textContent = data.current.uvi;
     // append to divs
     tempEl.appendChild(curTemp);
