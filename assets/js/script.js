@@ -1,5 +1,5 @@
 // place api key here for development
-var apiKey = "18e2ac046083c4c6e61f1e447f65bee7"
+var apiKey = ""
 // get coordinates for city
 
 var getCoords = function(city) {
