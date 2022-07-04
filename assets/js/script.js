@@ -87,25 +87,30 @@ var dailyData = function(data) {
         // create card elements
         var cardDiv = document.createElement("div");
         var cardEl = document.createElement("div");
-        var cardHeaderEl = document.createElement("div");
+        var cardHeaderEl = document.createElement("h5");
+        var imgDiv = document.createElement("div");
+        var imgEl = document.createElement("img");
         var listEl = document.createElement("ul");
         var listHiTemp = document.createElement("li");
         var listLowTemp = document.createElement("li");
         var listWind = document.createElement("li");
         var listHum = document.createElement("li");
         var listUV = document.createElement("li");
-
+        var iconUrl = "http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + "@2x.png";
         // assign BS classes/attributes
-        cardDiv.classList = "col-12 col-sm-6 col-lg-3"
-        cardEl.classList = "card bg-secondary m-1";
-        // cardEl.setAttribute("style", "width: 13rem;");
-        cardHeaderEl.className = "card-header";
+        cardDiv.classList = "col-12 col-sm-6 col-lg-3";
+        cardEl.classList = "card bg-secondary my-2";
+        imgEl.setAttribute("src", iconUrl);
+        imgEl.setAttribute("alt", data.daily[i].weather[0].description);
+        imgDiv.classList = "mx-auto";
+        imgEl.classList = "list-group-item";
+        cardHeaderEl.classList = "card-header text-center";
         listEl.classList = "list-group list-group-flush";
-        listHiTemp.classList = "list-group-item";
-        listLowTemp.className = "list-group-item";
-        listWind.className = "list-group-item";
-        listHum.className = "list-group-item";
-        listUV.className = "list-group-item";
+        listHiTemp.classList = "list-group-item text-center ";
+        listLowTemp.classList = "list-group-item text-center";
+        listWind.classList = "list-group-item text-center";
+        listHum.classList = "list-group-item text-center";
+        listUV.classList = "list-group-item text-center";
 
         //Get day of week
         var day = new Date((data.daily[i].dt + data.timezone_offset) * 1000);
@@ -115,6 +120,7 @@ var dailyData = function(data) {
         
         // put data in textcontent of elements
         cardHeaderEl.textContent = new Intl.DateTimeFormat('en-US', options).format(day) + " " + day.toLocaleDateString();
+
         listHiTemp.textContent = "High: " + data.daily[i].temp.max + " °F";
         listLowTemp.textContent = "Low: " + data.daily[i].temp.min + " °F";
         listWind.textContent = "Wind: " + data.daily[i].wind_speed + " mph";
@@ -124,7 +130,9 @@ var dailyData = function(data) {
         // append to div
         dailyWeatherEl.appendChild(cardDiv);
         cardDiv.appendChild(cardEl);
+        imgDiv.appendChild(imgEl);
         cardEl.appendChild(cardHeaderEl);
+        cardEl.appendChild(imgDiv);
         cardEl.appendChild(listEl);
         listEl.appendChild(listHiTemp);
         listEl.appendChild(listLowTemp);
