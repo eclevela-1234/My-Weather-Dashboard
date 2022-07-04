@@ -85,6 +85,7 @@ var displayData = function(data){
 var dailyData = function(data) {
     for (var i=0; i < data.daily.length; i++) {
         // create card elements
+        var cardDiv = document.createElement("div");
         var cardEl = document.createElement("div");
         var cardHeaderEl = document.createElement("div");
         var listEl = document.createElement("ul");
@@ -95,10 +96,11 @@ var dailyData = function(data) {
         var listUV = document.createElement("li");
 
         // assign BS classes/attributes
-        cardEl.classList = "card bg-secondary";
-        cardEl.setAttribute("style", "width: 13rem;");
+        cardDiv.classList = "col-12 col-sm-6 col-lg-3"
+        cardEl.classList = "card bg-secondary m-1";
+        // cardEl.setAttribute("style", "width: 13rem;");
         cardHeaderEl.className = "card-header";
-        listEl.classList = "list-group list-group-flush py-2";
+        listEl.classList = "list-group list-group-flush";
         listHiTemp.classList = "list-group-item";
         listLowTemp.className = "list-group-item";
         listWind.className = "list-group-item";
@@ -120,7 +122,8 @@ var dailyData = function(data) {
         listUV.textContent = "UV Index: " + data.daily[i].uvi;
 
         // append to div
-        dailyWeatherEl.appendChild(cardEl);
+        dailyWeatherEl.appendChild(cardDiv);
+        cardDiv.appendChild(cardEl);
         cardEl.appendChild(cardHeaderEl);
         cardEl.appendChild(listEl);
         listEl.appendChild(listHiTemp);
