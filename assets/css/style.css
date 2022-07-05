@@ -15,3 +15,23 @@
   #now-data-group {
     line-height: 1.8;
   }
+
+  #uv-index span {
+    padding: 0 10px 0 10px;
+    color: white;
+  }
+  .bgGreen {
+    background-color: green;
+  }
+  .bgYellow {
+    background-color: yellow;
+  }
+  .bgOrange {
+    background-color: orange;
+  }
+  .bgRed {
+    background-color: red;
+  }
+  .bgPurple {
+    background-color: purple;
+  }

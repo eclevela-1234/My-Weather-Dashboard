@@ -29,68 +29,21 @@
             </div>
             <div class="col-12 col-md-9">
                 <div class="col-12 border p-1 border-dark" id="weather-now">
-                    <h2>Richmond, (7/3/2022)</h2>
-                    <div id="now-data-group">
-                        <div class="list-item" id="temp">Temp</div>
-                        <div id="wind">Wind</div>
-                        <div id="humidity">Humidity</div>
-                        <div id="uv-index">UV-Index</div>
+                    <h2 id="weather-header"></h2>
+                    <div class="row">
+                        <div class="col-6 col-md-4 col-lg-3" id="now-data-group">
+                            <div id="temp">Temp: </div>
+                            <div id="wind">Wind: </div>
+                            <div id="humidity">Humidity: </div>
+                            <div id="uv-index">UV-Index: </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3"  id="current-icon-div"></div>
                     </div>
                 </div>
-                <h3 class="col-12">5-Day Forecast</h3>
-                <div class="row justify-content-around">
-                    <div class="card bg-secondary" id="" style="width: 10rem;">
-                        <div class="card-header">Monday</div>
-                        <ul class="list-group list-group-flush">
-                            <img src="https://via.placeholder.com/100" alt="">
-                            <li class="list-group-item">Temp:</li>
-                            <li class="list-group-item">Wind:</li>
-                            <li class="list-group-item">Humidity:</li>
-                        </ul>
-                        
+                <h3 class="col-12 my-2">8-Day Forecast</h3>
+                <div class="col-12">
+                    <div class="row justify-content-around" id="daily-weather">
                     </div>
-                    <div class="card bg-secondary" id="" style="width: 10rem;">
-                        <div class="card-header">Monday</div>
-                        <ul class="list-group list-group-flush">
-                            <img src="https://via.placeholder.com/50" alt="">
-                            <li class="list-group-item">Temp:</li>
-                            <li class="list-group-item">Wind:</li>
-                            <li class="list-group-item">Humidity:</li>
-                        </ul>
-                        
-                    </div>
-                    <div class="card bg-secondary" id="" style="width: 10rem;">
-                        <div class="card-header">Monday</div>
-                        <ul class="list-group list-group-flush">
-                            <img src="https://via.placeholder.com/50" alt="">
-                            <li class="list-group-item">Temp:</li>
-                            <li class="list-group-item">Wind:</li>
-                            <li class="list-group-item">Humidity:</li>
-                        </ul>
-                        
-                    </div>
-                    <div class="card bg-secondary" id="" style="width: 10rem;">
-                        <div class="card-header">Monday</div>
-                        <ul class="list-group list-group-flush">
-                            <img src="https://via.placeholder.com/50" alt="">
-                            <li class="list-group-item">Temp:</li>
-                            <li class="list-group-item">Wind:</li>
-                            <li class="list-group-item">Humidity:</li>
-                        </ul>
-                        
-                    </div>
-                    <div class="card bg-secondary" id="" style="width: 10rem;">
-                        <div class="card-header">Monday</div>
-                        <ul class="list-group list-group-flush">
-                            <img src="https://via.placeholder.com/50" alt="">
-                            <li class="list-group-item">Temp:</li>
-                            <li class="list-group-item">Wind:</li>
-                            <li class="list-group-item">Humidity:</li>
-                        </ul>
-                        
-                    </div>
-
-
                 </div>
             </div>
 
@@ -98,8 +51,8 @@
 
     </main>
 
-
-    <script src="./assets/js/script.js"></script>
+    <script type="module" src="./assets/js/api.js"></script>
+    <script type="module" src="./assets/js/script.js"></script>
 </body>
 
 </html>
