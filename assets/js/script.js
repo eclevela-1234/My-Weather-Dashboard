@@ -8,6 +8,8 @@ var uvEl = document.querySelector("#uv-index");
 var weatherHeaderEl = document.querySelector("#weather-header");
 var dailyWeatherEl = document.querySelector("#daily-weather");
 var curImgDivEl = document.querySelector("#current-icon-div");
+var searchBtnEl = document.querySelector("#searchBtn");
+var inputEl = document.querySelector("#city");
 
 
 //to test functionality, please disable import and add an OpenWeather api key below
@@ -68,16 +70,15 @@ var displayData = function(data){
     var curIconUrl = "http://openweathermap.org/img/wn/" + data.current.weather[0].icon + "@2x.png";
     curImgEl.setAttribute("src", curIconUrl);
     curImgEl.setAttribute("alt", data.current.weather[0].description);
-    curImgEl.classList = "rounded-5 bg-secondary"
-    curTemp.textContent = data.current.temp + " °F";
-    curWind.textContent = data.current.wind_speed + " mph";
-    curHum.textContent = data.current.humidity + " %";
+    curImgEl.classList = "rounded-2 bg-secondary mt-1"
     curUV.textContent = data.current.uvi;
-    // append to divs
+    curImgDivEl.innerHTML = "";
     curImgDivEl.appendChild(curImgEl);
-    tempEl.appendChild(curTemp);
-    windEl.appendChild(curWind);
-    humEl.appendChild(curHum);
+    tempEl.textContent = "Temp: " + data.current.temp + " °F";
+    windEl.textContent = "Wind: " + data.current.wind_speed + " mph";
+    humEl.textContent = "Humidity: " + data.current.humidity + " %";
+    uvEl.innerHTML = "";
+    uvEl.textContent = "UV-Index: ";
     uvEl.appendChild(curUV);
 
     // switch case for UV bg color
@@ -161,11 +162,20 @@ var dailyData = function(data) {
     }
 
 }
-getCoords("richmond");
-// traverse response to disired info and store in object array
 
-// dynamically create elements and display on page
+var searchBtnHandler = function(event) {
+    event.preventDefault();
+   var cityName = inputEl.value.trim();
+   getCoords(cityName);
+}
 
-// add persistence - store city names/coords
+if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition((position) => {
+        getWeather(position.coords.latitude, position.coords.longitude);
+      });
+}
 
-// add auto load with current location info
+
+
+inputEl.addEventListener("change", searchBtnHandler);
+searchBtnEl.addEventListener("click", searchBtnHandler);
