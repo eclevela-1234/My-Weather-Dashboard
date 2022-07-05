@@ -60,7 +60,9 @@ var loadButtons = function () {
       var name = cityArr[i];
       createButton(name);
     }
-  } else {cityArr = []}
+  } else {
+    cityArr = [];
+  }
 };
 //create button elements
 var createButton = function (name) {
@@ -111,24 +113,20 @@ var displayData = function (data) {
   uvEl.textContent = "UV-Index: ";
   uvEl.appendChild(curUV);
 
-  // switch case for UV bg color
+  // conditional for UV bg color
 
   var uvVal = data.current.uvi;
-  switch (uvVal) {
-    case uvVal > 10:
-      curUV.className = "bgPurple";
-      break;
-    case uvVal > 7:
-      curUV.className = "bgRed";
-      break;
-    case uvVal > 5:
-      curUV.className = "bgOrange";
-      break;
-    case uvVal > 2:
-      curUV.className = "bgYellow";
-      break;
-    default:
-      curUV.className = "bgGreen";
+
+  if (uvVal > 10) {
+    curUV.className = "bgPurple";
+  } else if (uvVal > 7) {
+    curUV.className = "bgRed";
+  } else if (uvVal > 5) {
+    curUV.className = "bgOrange";
+  } else if (uvVal > 2) {
+    curUV.className = "bgYellow";
+  } else {
+    curUV.className = "bgGreen";
   }
 
   var date = new Date((data.current.dt + data.timezone_offset) * 1000);
@@ -205,18 +203,20 @@ var searchBtnHandler = function (event) {
 };
 
 var pastButtons = function (event) {
-    var city = event.target.textContent;
-    getCoords(city);
-}
+  var city = event.target.textContent;
+  getCoords(city);
+};
 
-var clearButtons = function() {
-    var confirm = window.confirm("Are you sure you want to delete your search history?");
-    if (confirm) {
-        cityArr = [];
-        localStorage.removeItem("buttons");
-        searchBtnDiv.innerHTML = "";
-    }
-}
+var clearButtons = function () {
+  var confirm = window.confirm(
+    "Are you sure you want to delete your search history?"
+  );
+  if (confirm) {
+    cityArr = [];
+    localStorage.removeItem("buttons");
+    searchBtnDiv.innerHTML = "";
+  }
+};
 
 if ("geolocation" in navigator) {
   navigator.geolocation.getCurrentPosition((position) => {
@@ -244,5 +244,5 @@ loadButtons();
 
 inputEl.addEventListener("change", searchBtnHandler);
 searchBtnEl.addEventListener("click", searchBtnHandler);
-searchBtnDiv.addEventListener("click", pastButtons)
+searchBtnDiv.addEventListener("click", pastButtons);
 clearBtnEl.addEventListener("click", clearButtons);
