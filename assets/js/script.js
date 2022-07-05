@@ -7,6 +7,7 @@ var humEl = document.querySelector("#humidity");
 var uvEl = document.querySelector("#uv-index");
 var weatherHeaderEl = document.querySelector("#weather-header");
 var dailyWeatherEl = document.querySelector("#daily-weather");
+var curImgDivEl = document.querySelector("#current-icon-div");
 
 
 //to test functionality, please disable import and add an OpenWeather api key below
@@ -62,16 +63,42 @@ var displayData = function(data){
     var curWind = document.createElement("span");
     var curHum = document.createElement("span");
     var curUV = document.createElement("span");
+    var curImgEl = document.createElement("img");
     //parse current data
+    var curIconUrl = "http://openweathermap.org/img/wn/" + data.current.weather[0].icon + "@2x.png";
+    curImgEl.setAttribute("src", curIconUrl);
+    curImgEl.setAttribute("alt", data.current.weather[0].description);
+    curImgEl.classList = "rounded-5 bg-secondary"
     curTemp.textContent = data.current.temp + " °F";
     curWind.textContent = data.current.wind_speed + " mph";
     curHum.textContent = data.current.humidity + " %";
     curUV.textContent = data.current.uvi;
     // append to divs
+    curImgDivEl.appendChild(curImgEl);
     tempEl.appendChild(curTemp);
     windEl.appendChild(curWind);
     humEl.appendChild(curHum);
     uvEl.appendChild(curUV);
+
+    // switch case for UV bg color
+
+    var uvVal = data.current.uvi;
+    switch(uvVal) {
+        case (uvVal > 10):
+            curUV.className = "bgPurple";
+            break;
+        case (uvVal > 7):
+            curUV.className = "bgRed";
+            break;
+        case (uvVal > 5):
+            curUV.className = "bgOrange";
+            break;
+        case (uvVal > 2):
+            curUV.className = "bgYellow";
+            break;
+        default:
+            curUV.className = "bgGreen";
+    };
     
     var date = new Date((data.current.dt + data.timezone_offset) * 1000);
     date = date.toLocaleDateString();
@@ -95,7 +122,6 @@ var dailyData = function(data) {
         var listLowTemp = document.createElement("li");
         var listWind = document.createElement("li");
         var listHum = document.createElement("li");
-        var listUV = document.createElement("li");
         var iconUrl = "http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + "@2x.png";
         // assign BS classes/attributes
         cardDiv.classList = "col-12 col-sm-6 col-lg-3";
@@ -104,29 +130,23 @@ var dailyData = function(data) {
         imgEl.setAttribute("alt", data.daily[i].weather[0].description);
         imgDiv.classList = "mx-auto";
         imgEl.classList = "list-group-item";
-        cardHeaderEl.classList = "card-header text-center";
+        cardHeaderEl.classList = "card-header text-center text-light";
         listEl.classList = "list-group list-group-flush";
         listHiTemp.classList = "list-group-item text-center ";
         listLowTemp.classList = "list-group-item text-center";
         listWind.classList = "list-group-item text-center";
         listHum.classList = "list-group-item text-center";
-        listUV.classList = "list-group-item text-center";
 
         //Get day of week
         var day = new Date((data.daily[i].dt + data.timezone_offset) * 1000);
         var options = { weekday: "short" };
-        // console.log(new Intl.DateTimeFormat('en-US', options).format(day));
-
-        
-        // put data in textcontent of elements
         cardHeaderEl.textContent = new Intl.DateTimeFormat('en-US', options).format(day) + " " + day.toLocaleDateString();
-
+        // put data in textcontent of elements
         listHiTemp.textContent = "High: " + data.daily[i].temp.max + " °F";
         listLowTemp.textContent = "Low: " + data.daily[i].temp.min + " °F";
         listWind.textContent = "Wind: " + data.daily[i].wind_speed + " mph";
         listHum.textContent = "Humitity: " + data.daily[i].humidity + " %";
-        listUV.textContent = "UV Index: " + data.daily[i].uvi;
-
+  
         // append to div
         dailyWeatherEl.appendChild(cardDiv);
         cardDiv.appendChild(cardEl);
@@ -138,9 +158,6 @@ var dailyData = function(data) {
         listEl.appendChild(listLowTemp);
         listEl.appendChild(listWind);
         listEl.appendChild(listHum);
-        listEl.appendChild(listUV);
-
-
     }
 
 }
