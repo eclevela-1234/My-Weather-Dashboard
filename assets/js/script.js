@@ -11,6 +11,7 @@ var curImgDivEl = document.querySelector("#current-icon-div");
 var searchBtnEl = document.querySelector("#searchBtn");
 var inputEl = document.querySelector("#city");
 var searchBtnDiv = document.querySelector("#past-search-btns");
+var clearBtnEl = document.querySelector("#clear-btn");
 var cityArr = [];
 
 //to test functionality, please disable import and add an OpenWeather api key below
@@ -64,7 +65,7 @@ var loadButtons = function () {
 //create button elements
 var createButton = function (name) {
   var cityButtoneEl = document.createElement("button");
-  cityButtoneEl.classList = "btn btn-secondary form-control mt-3";
+  cityButtoneEl.classList = "btn btn-primary form-control mt-3";
   cityButtoneEl.textContent = name;
   searchBtnDiv.appendChild(cityButtoneEl);
 };
@@ -203,6 +204,20 @@ var searchBtnHandler = function (event) {
   getCoords(cityName);
 };
 
+var pastButtons = function (event) {
+    var city = event.target.textContent;
+    getCoords(city);
+}
+
+var clearButtons = function() {
+    var confirm = window.confirm("Are you sure you want to delete your search history?");
+    if (confirm) {
+        cityArr = [];
+        localStorage.removeItem("buttons");
+        searchBtnDiv.innerHTML = "";
+    }
+}
+
 if ("geolocation" in navigator) {
   navigator.geolocation.getCurrentPosition((position) => {
     // reverse geocoding call for city name
@@ -229,3 +244,5 @@ loadButtons();
 
 inputEl.addEventListener("change", searchBtnHandler);
 searchBtnEl.addEventListener("click", searchBtnHandler);
+searchBtnDiv.addEventListener("click", pastButtons)
+clearBtnEl.addEventListener("click", clearButtons);
