@@ -10,6 +10,8 @@ var dailyWeatherEl = document.querySelector("#daily-weather");
 var curImgDivEl = document.querySelector("#current-icon-div");
 var searchBtnEl = document.querySelector("#searchBtn");
 var inputEl = document.querySelector("#city");
+var searchBtnDiv = document.querySelector("#past-search-btns");
+var cityArr = [];
 
 //to test functionality, please disable import and add an OpenWeather api key below
 // var apiKey = "";
@@ -30,13 +32,44 @@ var getCoords = function (city) {
         var name = data[0].name;
         weatherHeaderEl.textContent = name;
         getWeather(lat, lon);
+        checkButtons(name);
       });
     }
   });
 };
 
-// plug coords into one call api
+// check buttons for duplicates
+var checkButtons = function (name) {
+  cityArr.push(name);
+  var citySet = new Set(cityArr);
+  var NewArr = Array.from(citySet);
+  if (cityArr.length !== NewArr.length) {
+    cityArr = NewArr;
+  } else {
+    createButton(name);
+    localStorage.setItem("buttons", JSON.stringify(cityArr));
+  }
+};
 
+var loadButtons = function () {
+  cityArr = JSON.parse(localStorage.getItem("buttons"));
+
+  if (cityArr) {
+    for (var i = 0; i < cityArr.length; i++) {
+      var name = cityArr[i];
+      createButton(name);
+    }
+  } else {cityArr = []}
+};
+//create button elements
+var createButton = function (name) {
+  var cityButtoneEl = document.createElement("button");
+  cityButtoneEl.classList = "btn btn-secondary form-control mt-3";
+  cityButtoneEl.textContent = name;
+  searchBtnDiv.appendChild(cityButtoneEl);
+};
+
+// fetch to one call api
 var getWeather = function (lat, lon) {
   var apiUrl =
     "https://api.openweathermap.org/data/2.5/onecall?lat=" +
@@ -105,7 +138,7 @@ var displayData = function (data) {
 
 // function to populate forcast data
 var dailyData = function (data) {
-    dailyWeatherEl.innerHTML = "";
+  dailyWeatherEl.innerHTML = "";
   for (var i = 0; i < data.daily.length; i++) {
     // create card elements
     var cardDiv = document.createElement("div");
@@ -166,6 +199,7 @@ var dailyData = function (data) {
 var searchBtnHandler = function (event) {
   event.preventDefault();
   var cityName = inputEl.value.trim();
+  inputEl.value = "";
   getCoords(cityName);
 };
 
@@ -175,7 +209,9 @@ if ("geolocation" in navigator) {
     var apiUrl =
       "http://api.openweathermap.org/geo/1.0/reverse?lat=" +
       position.coords.latitude +
-      "&lon=" + position.coords.longitude + "&limit=1&appid=" +
+      "&lon=" +
+      position.coords.longitude +
+      "&limit=1&appid=" +
       apiKey;
     fetch(apiUrl).then(function (response) {
       if (response.ok) {
@@ -189,6 +225,7 @@ if ("geolocation" in navigator) {
     getWeather(position.coords.latitude, position.coords.longitude);
   });
 }
+loadButtons();
 
 inputEl.addEventListener("change", searchBtnHandler);
 searchBtnEl.addEventListener("click", searchBtnHandler);
