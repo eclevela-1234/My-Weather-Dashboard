@@ -12,56 +12,75 @@ var searchBtnEl = document.querySelector("#searchBtn");
 var inputEl = document.querySelector("#city");
 var searchBtnDiv = document.querySelector("#past-search-btns");
 var clearBtnEl = document.querySelector("#clear-btn");
-var cityArr = [];
+var citiesArr = [];
 
 //to test functionality, please disable import and add an OpenWeather api key below
 // var apiKey = "";
-
-var getCoords = function (city) {
-  // get coordinates for city
-  var apiUrl =
+var cityCheck = function(city) {
+    var cityArr = city.split(" ");
+    if (cityArr.length > 1) {
+      city = "";
+      for (var i = 0; i < cityArr.length; i++) {
+        if (i < cityArr.length - 1) {
+          city += cityArr[i] + "%20";
+        } else {
+          city += cityArr[i];
+        }
+      }
+    }
+    var apiUrl =
     "http://api.openweathermap.org/geo/1.0/direct?q=" +
     city +
     "&limit=1&appid=" +
     apiKey;
+    console.log(apiUrl);
+    getCoords(apiUrl);
+};
 
-  fetch(apiUrl).then(function (response) {
-    if (response.ok) {
-      response.json().then(function (data) {
-        var lat = data[0].lat;
-        var lon = data[0].lon;
-        var name = data[0].name;
-        weatherHeaderEl.textContent = name;
-        getWeather(lat, lon);
-        checkButtons(name);
-      });
-    }
-  });
+var getCoords = function (apiUrl) {
+  fetch(apiUrl)
+    .then(function (response) {
+      if (response.ok) {
+        response.json().then(function (data) {
+          var lat = data[0].lat;
+          var lon = data[0].lon;
+          var name = data[0].name;
+          weatherHeaderEl.textContent = name;
+          getWeather(lat, lon);
+          checkButtons(name);
+        });
+      } else {
+        alert("There was an issue! You may need to enter a valid location.");
+      }
+    })
+    .catch(function (error) {
+      alert("There is a connection errow to the API");
+    });
 };
 
 // check buttons for duplicates
 var checkButtons = function (name) {
-  cityArr.push(name);
-  var citySet = new Set(cityArr);
+  citiesArr.push(name);
+  var citySet = new Set(citiesArr);
   var NewArr = Array.from(citySet);
-  if (cityArr.length !== NewArr.length) {
-    cityArr = NewArr;
+  if (citiesArr.length !== NewArr.length) {
+    citiesArr = NewArr;
   } else {
     createButton(name);
-    localStorage.setItem("buttons", JSON.stringify(cityArr));
+    localStorage.setItem("buttons", JSON.stringify(citiesArr));
   }
 };
 
 var loadButtons = function () {
-  cityArr = JSON.parse(localStorage.getItem("buttons"));
+  citiesArr = JSON.parse(localStorage.getItem("buttons"));
 
-  if (cityArr) {
-    for (var i = 0; i < cityArr.length; i++) {
-      var name = cityArr[i];
+  if (citiesArr) {
+    for (var i = 0; i < citiesArr.length; i++) {
+      var name = citiesArr[i];
       createButton(name);
     }
   } else {
-    cityArr = [];
+    citiesArr = [];
   }
 };
 //create button elements
@@ -82,13 +101,19 @@ var getWeather = function (lat, lon) {
     "&exclude=minutely,hourly&units=imperial&appid=" +
     apiKey;
 
-  fetch(apiUrl).then(function (response) {
-    if (response.ok) {
-      response.json().then(function (data) {
-        displayData(data);
-      });
-    }
-  });
+  fetch(apiUrl)
+    .then(function (response) {
+      if (response.ok) {
+        response.json().then(function (data) {
+          displayData(data);
+        });
+      } else {
+        alert("Error: Please try again");
+      }
+    })
+    .catch(function (error) {
+      alert("Unable to connect to OpenWeatherMap");
+    });
 };
 
 var displayData = function (data) {
@@ -199,12 +224,12 @@ var searchBtnHandler = function (event) {
   event.preventDefault();
   var cityName = inputEl.value.trim();
   inputEl.value = "";
-  getCoords(cityName);
+  cityCheck(cityName);
 };
 
 var pastButtons = function (event) {
   var city = event.target.textContent;
-  getCoords(city);
+  cityCheck(city);
 };
 
 var clearButtons = function () {
@@ -212,7 +237,7 @@ var clearButtons = function () {
     "Are you sure you want to delete your search history?"
   );
   if (confirm) {
-    cityArr = [];
+    citiesArr = [];
     localStorage.removeItem("buttons");
     searchBtnDiv.innerHTML = "";
   }
@@ -228,14 +253,20 @@ if ("geolocation" in navigator) {
       position.coords.longitude +
       "&limit=1&appid=" +
       apiKey;
-    fetch(apiUrl).then(function (response) {
-      if (response.ok) {
-        response.json().then(function (data) {
-          var name = data[0].name;
-          weatherHeaderEl.textContent = name;
-        });
-      }
-    });
+    fetch(apiUrl)
+      .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (data) {
+            var name = data[0].name;
+            weatherHeaderEl.textContent = name;
+          });
+        } else {
+          alert("Error: Please try again");
+        }
+      })
+      .catch(function (error) {
+        alert("Unable to connect to OpenWeatherMap");
+      });
 
     getWeather(position.coords.latitude, position.coords.longitude);
   });
