@@ -4,7 +4,7 @@ A web app that makes API calls to OpenWeather and presents current weather info,
 ![screenshot of app](./assets/images/screenshot.png)
 
 ## Link
-https://eclevela-1234.github.io/my-weather-dashboard/
+https://eclevela-1234.github.io/My-Weather-Dashboard/
 
 ## Topics Covered
 * API calls, asynchronous functions
