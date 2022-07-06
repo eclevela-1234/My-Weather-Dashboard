@@ -1,37 +1,40 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+body {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
 
-  body {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  }
+header,
+footer {
+  background-image: linear-gradient(to right, lightblue, purple);
+}
 
-  header {
-    background-image: linear-gradient(to right, lightblue, purple);
-  }
+#now-data-group {
+  line-height: 1.8;
+}
 
-  #now-data-group {
-    line-height: 1.8;
-  }
+#uv-index span {
+  padding: 0 10px 0 10px;
+  color: white;
+}
 
-  #uv-index span {
-    padding: 0 10px 0 10px;
-    color: white;
-  }
-  .bgGreen {
-    background-color: green;
-  }
-  .bgYellow {
-    background-color: yellow;
-  }
-  .bgOrange {
-    background-color: orange;
-  }
-  .bgRed {
-    background-color: red;
-  }
-  .bgPurple {
-    background-color: purple;
-  }
+/* conditional colors for UV Index */
+.bgGreen {
+  background-color: green;
+}
+.bgYellow {
+  background-color: yellow;
+}
+.bgOrange {
+  background-color: orange;
+}
+.bgRed {
+  background-color: red;
+}
+.bgPurple {
+  background-color: purple;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}

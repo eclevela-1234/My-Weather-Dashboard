@@ -1,6 +1,9 @@
 // api key hidden locally
-import { apiKey } from "./api.js";
+// import { apiKey } from "./api.js";
 
+var apiKey = "b13e0cc529070c7086450ac0a02f4aa9";
+
+// DOM elements
 var tempEl = document.querySelector("#temp");
 var windEl = document.querySelector("#wind");
 var humEl = document.querySelector("#humidity");
@@ -12,31 +15,33 @@ var searchBtnEl = document.querySelector("#searchBtn");
 var inputEl = document.querySelector("#city");
 var searchBtnDiv = document.querySelector("#past-search-btns");
 var clearBtnEl = document.querySelector("#clear-btn");
+
+// array for button labels
 var citiesArr = [];
 
-//to test functionality, please disable import and add an OpenWeather api key below
-// var apiKey = "";
-var cityCheck = function(city) {
-    var cityArr = city.split(" ");
-    if (cityArr.length > 1) {
-      city = "";
-      for (var i = 0; i < cityArr.length; i++) {
-        if (i < cityArr.length - 1) {
-          city += cityArr[i] + "%20";
-        } else {
-          city += cityArr[i];
-        }
+// function to remove spaces and construct geocode apiurl
+var cityCheck = function (city) {
+  var cityArr = city.split(" ");
+  if (cityArr.length > 1) {
+    city = "";
+    for (var i = 0; i < cityArr.length; i++) {
+      if (i < cityArr.length - 1) {
+        city += cityArr[i] + "%20";
+      } else {
+        city += cityArr[i];
       }
     }
-    var apiUrl =
+  }
+  var apiUrl =
     "http://api.openweathermap.org/geo/1.0/direct?q=" +
     city +
     "&limit=1&appid=" +
     apiKey;
-    console.log(apiUrl);
-    getCoords(apiUrl);
+  console.log(apiUrl);
+  getCoords(apiUrl);
 };
 
+// function to find lat/lon for the location input
 var getCoords = function (apiUrl) {
   fetch(apiUrl)
     .then(function (response) {
@@ -50,15 +55,17 @@ var getCoords = function (apiUrl) {
           checkButtons(name);
         });
       } else {
+        // error handling - I noticed this would throw on certain cases but still work so I changed the verbiage to suit
         alert("There was an issue! You may need to enter a valid location.");
       }
     })
     .catch(function (error) {
-      alert("There is a connection errow to the API");
+      alert("There is a connection error to the API");
+      console.log(error);
     });
 };
 
-// check buttons for duplicates
+// check buttons to avoid duplicates in the cities array - creates new button if no dupe
 var checkButtons = function (name) {
   citiesArr.push(name);
   var citySet = new Set(citiesArr);
@@ -71,6 +78,7 @@ var checkButtons = function (name) {
   }
 };
 
+// load buttons from localstorage
 var loadButtons = function () {
   citiesArr = JSON.parse(localStorage.getItem("buttons"));
 
@@ -83,6 +91,7 @@ var loadButtons = function () {
     citiesArr = [];
   }
 };
+
 //create button elements
 var createButton = function (name) {
   var cityButtoneEl = document.createElement("button");
@@ -113,9 +122,11 @@ var getWeather = function (lat, lon) {
     })
     .catch(function (error) {
       alert("Unable to connect to OpenWeatherMap");
+      console.log(error);
     });
 };
 
+// displays current data info - then calls the daily weather function
 var displayData = function (data) {
   //create span elements
   var curUV = document.createElement("span");
@@ -138,10 +149,8 @@ var displayData = function (data) {
   uvEl.textContent = "UV-Index: ";
   uvEl.appendChild(curUV);
 
-  // conditional for UV bg color
-
+  // conditional to change UV bg color based on value
   var uvVal = data.current.uvi;
-
   if (uvVal > 10) {
     curUV.className = "bgPurple";
   } else if (uvVal > 7) {
@@ -153,7 +162,7 @@ var displayData = function (data) {
   } else {
     curUV.className = "bgGreen";
   }
-
+  // add date to weatherHeader location name
   var date = new Date((data.current.dt + data.timezone_offset) * 1000);
   date = date.toLocaleDateString();
   weatherHeaderEl.textContent += " (" + date + ")";
@@ -175,6 +184,8 @@ var dailyData = function (data) {
     var listLowTemp = document.createElement("li");
     var listWind = document.createElement("li");
     var listHum = document.createElement("li");
+
+    // Get Icon for weather conditions
     var iconUrl =
       "http://openweathermap.org/img/wn/" +
       data.daily[i].weather[0].icon +
@@ -193,7 +204,7 @@ var dailyData = function (data) {
     listWind.classList = "list-group-item text-center";
     listHum.classList = "list-group-item text-center";
 
-    //Get day of week
+    //Get day of week using native JS methods
     var day = new Date(data.daily[i].dt * 1000);
     var options = { weekday: "short" };
     cardHeaderEl.textContent =
@@ -220,6 +231,8 @@ var dailyData = function (data) {
   }
 };
 
+//button/event handlers
+
 var searchBtnHandler = function (event) {
   event.preventDefault();
   var cityName = inputEl.value.trim();
@@ -227,11 +240,13 @@ var searchBtnHandler = function (event) {
   cityCheck(cityName);
 };
 
+// catches bubble events from all past buttons
 var pastButtons = function (event) {
   var city = event.target.textContent;
   cityCheck(city);
 };
 
+// confirms intent to delete history and does
 var clearButtons = function () {
   var confirm = window.confirm(
     "Are you sure you want to delete your search history?"
@@ -242,6 +257,8 @@ var clearButtons = function () {
     searchBtnDiv.innerHTML = "";
   }
 };
+
+// prompt user to access location
 
 if ("geolocation" in navigator) {
   navigator.geolocation.getCurrentPosition((position) => {

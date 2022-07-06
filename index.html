@@ -16,23 +16,24 @@
     <header class="container">
         <h1 class="text-center text-light py-2 m-1 fw-bold">Weather Dashboard</h1>
     </header>
-
+    <!--  responsive layout -->
     <main class="container">
         <div class="row">
             <div class="col-12 col-md-3" id="search-pane">
                 <div class="form-group pb-3 mb-3 border-bottom border-dark">
                     <label class="form-label fw-bold">Search for a City:</label>
                     <input class="form-control mb-2" type="text" name="city" id="city" placeholder="Richmond">
+                    <!-- Suggests a simple city name request - No state code handling at this phase -->
                     <button id="searchBtn" class="btn btn-info form-control">Search</button>
                 </div>
                 <div id="past-search-btns">
-                    <!-- <button class="btn btn-secondary form-control">Test</button> -->
                 </div>
                 <div>
-                <button id="clear-btn" class="btn btn-danger form-control mt-3">Clear Search History</button>
-            </div>
+                    <button id="clear-btn" class="btn btn-danger form-control mt-3">Clear Search History</button>
+                </div>
             </div>
             <div class="col-12 col-md-9">
+                <!-- current data section -->
                 <div class="col-12 border p-2 border-dark rounded-2" id="weather-now">
                     <h2 id="weather-header"></h2>
                     <div class="row">
@@ -42,9 +43,10 @@
                             <div id="humidity"></div>
                             <div id="uv-index"></div>
                         </div>
-                        <div class="col-6 col-md-4 col-lg-3"  id="current-icon-div"></div>
+                        <div class="col-6 col-md-4 col-lg-3" id="current-icon-div"></div>
                     </div>
                 </div>
+                <!-- Daily Forecasts -->
                 <h3 class="col-12 my-2">8-Day Forecast</h3>
                 <div class="col-12">
                     <div class="row justify-content-around" id="daily-weather">
@@ -55,7 +57,9 @@
         </div>
 
     </main>
-
+    <footer class="container">
+        <h3 class="text-center text-light py-2 m-1 fw-bold">Designed by <a href="https://github.com/eclevela-1234" target="_blank">Eliot Lander Cleveland</a> with ❤️!</h3>
+    </footer>
     <script type="module" src="./assets/js/api.js"></script>
     <script type="module" src="./assets/js/script.js"></script>
 </body>
