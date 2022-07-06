@@ -33,7 +33,7 @@ var cityCheck = function (city) {
     }
   }
   var apiUrl =
-    "http://api.openweathermap.org/geo/1.0/direct?q=" +
+    "https://api.openweathermap.org/geo/1.0/direct?q=" +
     city +
     "&limit=1&appid=" +
     apiKey;
@@ -133,7 +133,7 @@ var displayData = function (data) {
   var curImgEl = document.createElement("img");
   //parse current data
   var curIconUrl =
-    "http://openweathermap.org/img/wn/" +
+    "https://openweathermap.org/img/wn/" +
     data.current.weather[0].icon +
     "@2x.png";
   curImgEl.setAttribute("src", curIconUrl);
@@ -187,7 +187,7 @@ var dailyData = function (data) {
 
     // Get Icon for weather conditions
     var iconUrl =
-      "http://openweathermap.org/img/wn/" +
+      "https://openweathermap.org/img/wn/" +
       data.daily[i].weather[0].icon +
       "@2x.png";
     // assign BS classes/attributes
@@ -264,7 +264,7 @@ if ("geolocation" in navigator) {
   navigator.geolocation.getCurrentPosition((position) => {
     // reverse geocoding call for city name
     var apiUrl =
-      "http://api.openweathermap.org/geo/1.0/reverse?lat=" +
+      "https://api.openweathermap.org/geo/1.0/reverse?lat=" +
       position.coords.latitude +
       "&lon=" +
       position.coords.longitude +
