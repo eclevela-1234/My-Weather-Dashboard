@@ -56,7 +56,7 @@ var getCoords = function (apiUrl) {
         });
       } else {
         // error handling - I noticed this would throw on certain cases but still work so I changed the verbiage to suit
-        alert("There was an issue! You may need to enter a valid location.");
+        alert("There was an issue! You may need to enter a try again.");
       }
     })
     .catch(function (error) {
